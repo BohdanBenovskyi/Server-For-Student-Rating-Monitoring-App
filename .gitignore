@@ -1,2 +1,3 @@
-#don't track bin folder
+#don't track bin and lib folders
 bin/
+lib/
