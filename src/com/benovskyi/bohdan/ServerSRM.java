@@ -1,10 +1,14 @@
 package com.benovskyi.bohdan;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class ServerSRM {
 
 	public static void main(String[] args) {
+		/*
 		try {
 			String url = "jdbc:mysql://localhost:3306/sysmon?autoReconnect=true&useSSL=false";
 			String login = "root";
@@ -29,6 +33,8 @@ public class ServerSRM {
 		} catch (Exception e) {
             e.printStackTrace();
         }
+        */
+		
 		
 	}
 
