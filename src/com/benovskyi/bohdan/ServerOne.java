@@ -2,6 +2,7 @@ package com.benovskyi.bohdan;
 
 import java.io.*;
 import java.net.*;
+import java.util.StringTokenizer;
 
 class ServerOne extends Thread {
 	   private Socket socket;
@@ -19,10 +20,17 @@ class ServerOne extends Thread {
 	      try {
 	         while (true) {
 	            String str = in.readLine();
+	            String login;
+	            String password;
 	            if (str.equals("END"))
 	               break;
 	            System.out.println("Echoing: " + str);
-	            //out.println(str);
+	            if(str.equals("login")) {
+	            	login = in.readLine();
+	            	password = in.readLine();
+	            	System.out.println("log: " + login + ", pasw: " + password);
+	            }
+	            //out.println(str); 
 	         }
 	         System.out.println("closing...");
 	      }
