@@ -18,6 +18,11 @@ class ServerOne extends Thread {
 	public ServerOne(Socket s, Connection c) throws IOException {
 		socket = s;
 		con = c;
+		try {
+			myStmt = con.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 		start();
@@ -29,6 +34,7 @@ class ServerOne extends Thread {
 				String str = in.readLine();
 				String login;
 				String password;
+				String institutes = "";
 
 				if (str.equals("END"))
 					break;
@@ -40,7 +46,6 @@ class ServerOne extends Thread {
 					password = in.readLine();
 					System.out.println("log: " + login + ", pasw: " + password);
 					try {
-						myStmt = con.createStatement();
 						myRs = myStmt.executeQuery("select * from sysmon.users where login = \'" + login
 								+ "\' and password = " + password);
 						while (myRs.next()) {
@@ -66,6 +71,20 @@ class ServerOne extends Thread {
 						}
 
 					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				if(str.equals("inst")) {
+					try {
+						myRs = myStmt.executeQuery("select * from sysmon.institutes");
+						while(myRs.next()) {
+							institutes += myRs.getString("name");
+							institutes += " ";
+						}
+						out.println("inst");
+						out.println(institutes);
+					} catch (SQLException e) {
 						e.printStackTrace();
 					}
 				}
