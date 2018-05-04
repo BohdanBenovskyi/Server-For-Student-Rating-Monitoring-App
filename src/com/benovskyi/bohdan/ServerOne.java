@@ -78,6 +78,7 @@ class ServerOne extends Thread {
 				if(str.equals("inst")) {
 					try {
 						myRs = myStmt.executeQuery("select * from sysmon.institutes");
+						
 						while(myRs.next()) {
 							institutes += myRs.getString("name");
 							institutes += " ";
