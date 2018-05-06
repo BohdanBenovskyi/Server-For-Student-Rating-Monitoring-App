@@ -118,6 +118,27 @@ class ServerOne extends Thread {
 						e.printStackTrace();
 					}
 				}
+				
+				if(str.equals("get_rating")) {
+					String group = in.readLine();
+					String result = "";
+					String qry = "select * from sysmon.students where `group` = \'" + group + "\'";
+					System.out.println("Query: " + qry);
+					
+					try {
+						myRs = myStmt.executeQuery(qry);
+						
+						while (myRs.next()) {
+							result += myRs.getString("name") + " " + myRs.getString("lastname") + " " + myRs.getString("group") + " " + myRs.getString("institute") + " " + myRs.getString("stn") + " " + myRs.getString("rating") + "&";
+						}
+						
+						out.println("rating");
+						out.println(result);
+					
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
 
 			}
 			System.out.println("closing...");
