@@ -74,21 +74,51 @@ class ServerOne extends Thread {
 						e.printStackTrace();
 					}
 				}
-				
-				if(str.equals("inst")) {
+
+				if (str.equals("inst")) {
 					try {
 						myRs = myStmt.executeQuery("select * from sysmon.institutes");
-						
-						while(myRs.next()) {
+
+						while (myRs.next()) {
 							institutes += myRs.getString("name");
 							institutes += " ";
 						}
+
+						String[] inst = institutes.split("\\s+");
+						String[] grp = new String[inst.length];
+						for (int i = 0; i < grp.length; i++) {
+							grp[i] = "";
+						}
+
+						for (int i = 0; i < inst.length; i++) {
+							String qry = "select * from sysmon.groups where `institute` = \'" + inst[i] + "\'";
+							System.out.println("Query: " + qry);
+
+							myRs = myStmt.executeQuery(qry);
+
+							while (myRs.next()) {
+								grp[i] += myRs.getString("group");
+								System.out.println(grp[i]);
+								grp[i] += " ";
+							}
+						}
+
 						out.println("inst");
 						out.println(institutes);
+
+						for (int i = 0; i < grp.length; i++)
+							System.out.println("Groups server: " + grp[i]);
+
+						out.println("grp");
+						for (int i = 0; i < grp.length; i++) {
+							out.println(grp[i]);
+						}
+
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
 				}
+
 			}
 			System.out.println("closing...");
 		} catch (IOException e) {
